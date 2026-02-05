@@ -9,9 +9,9 @@ const router = (app) => {
 
   app.use(express.static('public'));
 
-  app.get('/', (req, res) => {
+  /* app.get('/', (req, res) => {
     res.send('Trallalla');
-  });
+  }); */
 }
 
 export default router;
