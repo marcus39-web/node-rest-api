@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1><%= heading %></h1>
+
+  <form action="/users/update" method="post" id="updateForm">
+    <input type="hidden" id="id" name="users_id" required>
+    
+    <div style="position: relative;">
+      <label for="username">Benutzername:</label><br>
+      <input type="text" id="username" name="users_name" placeholder="Buchstaben eingeben..." required autocomplete="off">
+      <div id="autocomplete-list" style="display: none; position: absolute; border: 1px solid #d4d4d4; z-index: 99; width: 100%; max-height: 200px; overflow-y: auto; background-color: white; box-shadow: 0px 4px 6px rgba(0,0,0,0.1);">
+      </div>
+    </div>
+    <div>
+      <label for="password">Passwort:</label><br>
+      <input type="password" id="password" name="users_password" required>
+    </div>
+    <input type="submit" value="Benutzer aktualisieren">
+  </form>
+
+  <script>
+    const username = document.getElementById('username');
+    const autocompleteList = document.getElementById('autocomplete-list');
+    const users = <%= JSON.stringify(users) %>;
+    
+    console.log('Verfügbare Benutzer:', users);
+    
+    username.addEventListener('input', function() {
+      const searchValue = this.value.toLowerCase().trim();
+      autocompleteList.innerHTML = '';
+      
+      console.log('Suche nach:', searchValue);
+      
+      if (!searchValue || searchValue.length === 0) {
+        autocompleteList.style.display = 'none';
+        return;
+      }
+      
+      // Filtere Benutzer - findet alle Namen die die Buchstaben enthalten
+      const matches = users.filter(user => 
+        user.users_name.toLowerCase().includes(searchValue)
+      );
+      
+      console.log('Gefundene Benutzer:', matches);
+      
+      if (matches.length > 0) {
+        matches.forEach(user => {
+          const item = document.createElement('div');
+          item.textContent = `${user.users_name} (ID: ${user.users_id})`;
+          item.style.padding = '10px';
+          item.style.cursor = 'pointer';
+          item.style.borderBottom = '1px solid #eee';
+          item.style.fontWeight = 'bold';
+          
+          item.addEventListener('mouseenter', function() {
+            this.style.backgroundColor = '#e9e9e9';
+          });
+          
+          item.addEventListener('mouseleave', function() {
+            this.style.backgroundColor = 'white';
+          });
+          
+          item.addEventListener('click', function() {
+            console.log('Benutzer ausgewählt:', user);
+            document.getElementById('id').value = user.users_id;
+            document.getElementById('username').value = user.users_name;
+            document.getElementById('password').value = user.users_password;
+            autocompleteList.style.display = 'none';
+          });
+          
+          autocompleteList.appendChild(item);
+        });
+        autocompleteList.style.display = 'block';
+      } else {
+        const noResult = document.createElement('div');
+        noResult.textContent = 'Keine Benutzer gefunden';
+        noResult.style.padding = '10px';
+        noResult.style.color = '#999';
+        autocompleteList.appendChild(noResult);
+        autocompleteList.style.display = 'block';
+      }
+    });
+    
+    // Schließe Liste bei Klick außerhalb
+    document.addEventListener('click', function(e) {
+      if (e.target !== username && !autocompleteList.contains(e.target)) {
+        autocompleteList.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+
+</html>

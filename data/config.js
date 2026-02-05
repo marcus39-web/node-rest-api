@@ -11,6 +11,17 @@ const config = {
   database: process.env.DB_NAME,
 }
 
+console.log('Datenbankverbindung:', config);
+
 const pool = mysql.createPool(config);
+
+pool.getConnection((err, connection) => {
+  if (err) {
+    console.error('Datenbankverbindung fehlgeschlagen:', err.message);
+  } else {
+    console.log('Datenbankverbindung erfolgreich!');
+    connection.release();
+  }
+});
 
 export default pool;

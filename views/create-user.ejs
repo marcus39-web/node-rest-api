@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neuen Benutzer anlegen</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1>Neuen Benutzer anlegen</h1>
+
+  <form action="/users" method="post">
+    <div>
+      <label for="id">ID:</label><br>
+      <input type="number" id="id" name="users_id" required>
+    </div>
+    <div>
+      <label for="username">Benutzername:</label><br>
+      <input type="text" id="username" name="users_name" required>
+    </div>
+    <div>
+      <label for="password">Passwort:</label><br>
+      <input type="password" id="password" name="users_password" required>
+    </div>
+    <input type="submit" value="Benutzer erstellen">
+  </form>
+</body>
+
+</html>

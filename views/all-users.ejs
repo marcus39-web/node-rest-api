@@ -4,13 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %></title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <h1><%= heading %></h1>
 
   <ul>
     <% users.forEach( function(user) { %>
-      <li><%= user.users_name %></li>
+      <li>
+        <a href="/users/<%= user.users_id %>"><%= user.users_name %></a>
+        <form action="/users/<%= user.users_id %>/delete" method="POST">
+          <button type="submit" class="delete-btn">Löschen</button>
+        </form>
+      </li>
     <% }); %>
   </ul>
 </body>
