@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <style>
+    table {border-collapse: collapse;}
+    th, td {
+      text-align: left;
+      border: 1px solid darkgray;
+    }
+  </style>
+</head>
+<body>
+  <h1><%= heading %></h1>
+
+  <table>
+    <tr>
+      <th>ID</th>
+      <td><%= user[0].users_id %></td>
+    </tr>
+    <tr>
+      <th>Benutzername</th>
+      <td><%= user[0].users_name %></td>
+    </tr>
+    <tr>
+      <th>Passwort</th>
+      <td><%= user[0].users_password %></td>
+    </tr>
+    <tr>
+      <th>angelegt am</th>
+      <td><%= user[0].users_registered %></td>
+    </tr>
+    <tr>
+      <th>letzter Login</th>
+      <td><%= user[0].users_last_login %></td>
+    </tr>
+  </table>
+</body>
+</html>
